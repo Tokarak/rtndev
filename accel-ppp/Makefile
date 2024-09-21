@@ -8,16 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=accel-ppp
-PKG_VERSION:=1.13.0-1
-PKG_REV:=0c021f60244a7fd992916a882fb4ed7277f5cba8
-PKG_RELEASE:=1
+PKG_VERSION:=1.13.0
+PKG_REV:=973fc32ffa9cefcbc652236fe59b6ee1f5e1c37a
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_URL:=https://github.com/accel-ppp/accel-ppp.git
+PKG_SOURCE_URL:=https://github.com/Tokarak/accel-ppp
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_REV)
-PKG_MIRROR_HASH:=93295002cca6cc1b7a3ad4636bd45fcd9129acb840bfa79ab2c33ccc224d3029
 
 CMAKE_BINARY_SUBDIR:=openwrt-build
 
@@ -46,7 +45,7 @@ CMAKE_OPTIONS += \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DLOG_PGSQL=FALSE \
 	-DSHAPER=FALSE \
-	-DRADIUS=TRUE \
+	-DRADIUS=FALSE \
 	-DNETSNMP=FALSE \
 	-DLOG_FILE=FALSE \
 	-DLIB_SUFFIX= \
@@ -78,10 +77,10 @@ define Package/accel-ppp/install
 	$(INSTALL_DATA) \
 		$(PKG_INSTALL_DIR)/opt/share/accel-ppp/l2tp/dictionary* \
 		$(1)/opt/share/accel-ppp/l2tp
-	$(INSTALL_DIR) $(1)/opt/share/accel-ppp/radius
-	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)/opt/share/accel-ppp/radius/dictionary* \
-		$(1)/opt/share/accel-ppp/radius
+#	$(INSTALL_DIR) $(1)/opt/share/accel-ppp/radius
+#	$(INSTALL_DATA) \
+#		$(PKG_INSTALL_DIR)/opt/share/accel-ppp/radius/dictionary* \
+#		$(1)/opt/share/accel-ppp/radius
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/accel-pppd/accel-ppp.conf $(1)/opt/etc
 	$(INSTALL_BIN) files/S60accel-ppp $(1)/opt/etc/init.d
